@@ -1,5 +1,6 @@
 import * as redux from 'redux';
 import update from 'immutability-helper';
+import { reducer as formReducer } from 'redux-form';
 import { combineReducers } from 'redux';
 import {
   LOGIN_REQUEST,
@@ -11,7 +12,7 @@ import {
   QUOTE_FAILURE
 } from '../actions';
 
-export var addExercise = (state = [], action) => {
+const exerciseReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_EXERCISE':
       return update(state, {
@@ -25,7 +26,7 @@ export var addExercise = (state = [], action) => {
       });
 
     case 'ADD_EXERCISE_DETAILS':
-      var exerciseIndex = state.findIndex(function(exercise) {
+      const exerciseIndex = state.findIndex(function(exercise) {
         return exercise.id === action.id;
       });
       return update(state, {
@@ -45,15 +46,14 @@ export var addExercise = (state = [], action) => {
   }
 };
 
-export var saveWorkout = (state = [], action) => {
+const workoutReducer = (state = [], action) => {
   switch (action.type) {
     case 'SAVE_WORKOUT':
       return update(state, {
         $push: [
           {
-            workoutLabel: action.workoutLabel,
-            date: action.date,
-            storedSession: [...state]
+            workoutLabel: action.name,
+            date: action.date
           }
         ]
       });
@@ -61,7 +61,7 @@ export var saveWorkout = (state = [], action) => {
       return state;
   }
 };
-export var auth = (
+const authReducer = (
   state = {
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('id_token'),
@@ -98,10 +98,11 @@ export var auth = (
   }
 };
 
-const workoutReducers = combineReducers({
-  auth,
-  addExercise,
-  saveWorkout
+const reducer = combineReducers({
+  authReducer,
+  exerciseReducer,
+  formReducer,
+  workoutReducer
 });
 
-export default workoutReducers;
+export default reducer;

@@ -2,14 +2,65 @@ import * as redux from 'redux';
 import uuid from 'node-uuid';
 import moment from 'moment';
 
-export var addExercise = exercise => {
-  return {
-    type: 'ADD_EXERCISE',
-    id: uuid(),
-    exercise: exercise,
-    details: []
+// export var addExercise = exercise => {
+//   return {
+//     type: 'ADD_EXERCISE',
+//     id: uuid(),
+//     exercise: exercise,
+//     details: []
+//   };
+// };
+
+export function addExercise(exercise) {
+  const config = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `username=${creds.username}&password=${creds.password}`
   };
-};
+
+  return dispatch => {
+    // We dispatch requestLogin to kickoff the call to the API
+    dispatch(requestLogin(creds));
+    return fetch('http://localhost:8080/auth/login', config)
+      .then(response => response.json().then(user => ({ user, response })))
+      .then(({ user, response }) => {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          dispatch(loginError(user.message));
+          return Promise.reject(user);
+        }
+
+        // If login was successful, set the token in local storage
+        localStorage.setItem('id_token', user.token);
+
+        // Dispatch the success action
+        return dispatch(receiveLogin(user));
+      })
+      .catch(err => new Error(err));
+  };
+}
+
+export function createWorkout(name) {
+  const config = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `name=${name}`
+  };
+
+  return dispatch => {
+    return fetch('http://localhost:8080/api/workouts', config)
+      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          Promise.reject(response);
+        } else {
+          Promise.resolve(response);
+        }
+      })
+      .catch(err => new Error(err));
+  };
+}
 
 export var addExerciseDetails = (id, weight, reps) => {
   return {
@@ -17,15 +68,6 @@ export var addExerciseDetails = (id, weight, reps) => {
     id: id,
     weight: weight,
     reps: reps
-  };
-};
-
-export var saveWorkout = workoutLabel => {
-  return {
-    type: 'SAVE_WORKOUT',
-    workoutLabel: workoutLabel,
-    date: moment().format('MMM Do YYYY'),
-    storedSessoin: []
   };
 };
 

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { addExercise } from '../reducers/reducers';
 import SetReps from './SetReps';
 import { Field, reduxForm } from 'redux-form';
 
- class ExerciseTile extends Component {
+class ExerciseTile extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,7 +34,7 @@ import { Field, reduxForm } from 'redux-form';
     } = this.props;
     return (
       <div className="exercise-tile small-12 columns small-centered">
-        <h1>{this.props.title}</h1>
+        <h1> {this.props.title} </h1>
 
         {this.props.detail.map((detail, index) => {
           return (
@@ -50,7 +49,8 @@ import { Field, reduxForm } from 'redux-form';
 
         <form onSubmit={this.handleSubmit}>
           <div className="small-4 columns small-centered">
-            <label>Weight</label>
+            <label> Weight </label>
+            {' '}
             <input
               required
               maxLength={4}
@@ -59,10 +59,12 @@ import { Field, reduxForm } from 'redux-form';
               ref="weight"
               {...weight}
             />
+            {' '}
           </div>
 
           <div className="small-4 columns small-centered">
-            <label>Reps</label>
+            <label> Reps </label>
+            {' '}
             <input
               required
               maxLength={2}
@@ -71,24 +73,25 @@ import { Field, reduxForm } from 'redux-form';
               ref="reps"
               {...reps}
             />
-          </div>
-          <button className="button tiny">submit</button>
+            {' '}
+          </div> <button className="button tiny"> submit </button>{' '}
         </form>
-         {/*<div className="textHelp">{weight.touched ? weight.error : ''}</div>
-         <div className="textHelp">{reps.touched ? reps.error : ''}</div>*/}
+        {' '}
+        {/*<div className="textHelp">{weight.touched ? weight.error : ''}</div>
+                 <div className="textHelp">{reps.touched ? reps.error : ''}</div>*/}
 
       </div>
     );
   }
 }
-var mapStateToProps = (state) => {
-      console.log("state in exercise-tile",state);
+var mapStateToProps = state => {
+  console.log('state in exercise-tile', state);
 
   return {
     exercise: state.addExercise
   };
-
 };
+
 function validate(values) {
   var errors = {};
   if (!values.weight) {
