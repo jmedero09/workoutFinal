@@ -85,10 +85,8 @@ class ExerciseTile extends Component {
   }
 }
 var mapStateToProps = state => {
-  console.log('state in exercise-tile', state);
-
   return {
-    exercise: state.addExercise
+    exercises: state.addExercise
   };
 };
 

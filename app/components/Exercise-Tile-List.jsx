@@ -9,7 +9,7 @@ class ExerciseTileList extends Component {
   }
 
   renderList() {
-    console.log("props in exercise tile",this.props);
+    console.log(this.props)
     return this.props.exercise.map((exercise, index) => {
       return (
         <li key={exercise.id}>
