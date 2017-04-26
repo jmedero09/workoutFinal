@@ -17,14 +17,14 @@ class Dashboard extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    var { dispatch, exercise } = this.props;
+    var { dispatch, exercises } = this.props;
 
     var exerciseText = this.refs.addExercise.value;
 
-    dispatch(actions.addExercise(exerciseText));
-
+    var x = dispatch(actions.addExercise(exerciseText));
     this.refs.addExercise.value = '';
   }
+
   handleSave(e) {
     e.preventDefault();
     var { dispatch } = this.props;
@@ -59,10 +59,8 @@ class Dashboard extends Component {
                 placeholder="Add an Exercise"
                 {...exercise}
               />
-              {/*<div className="textHelp">
-                  {exercise.touched ? exercise.error : ''}
-                </div>*/}
-              <button className="button expanded">Add Exerasdasdcise</button>
+
+              <button className="button expanded">Add Exercise</button>
               <button onClick={this.handleSave} className="button expanded">
                 Save Workout
               </button>

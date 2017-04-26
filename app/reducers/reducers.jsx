@@ -12,26 +12,27 @@ import {
   QUOTE_FAILURE
 } from '../actions';
 
-const exerciseReducer = (state = [], action) => {
+const exerciseReducer = (state = { exercises: [] }, action) => {
   switch (action.type) {
     case 'ADD_EXERCISE':
-      return update(state, {
-        $push: [
+      return Object.assign({}, state, {
+        exercises: [
+          ...state.exercises,
           {
             id: action.id,
-            exercise: action.exercise,
-            detail: []
+            name: action.name,
+            sets_reps: []
           }
         ]
       });
 
     case 'ADD_EXERCISE_DETAILS':
-      const exerciseIndex = state.findIndex(function(exercise) {
+      const exerciseIndex = state.exercises.findIndex(function(exercise) {
         return exercise.id === action.id;
       });
       return update(state, {
         [exerciseIndex]: {
-          detail: {
+          sets_reps: {
             $push: [
               {
                 reps: action.reps,

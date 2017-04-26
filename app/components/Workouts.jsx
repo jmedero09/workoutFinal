@@ -8,8 +8,6 @@ class Workouts extends Component {
     super(props);
   }
   renderList() {
-    console.log('vaaaaat');
-    console.log(this.props);
     return this.props.saved.createWorkout.map((WorkoutTile, index) => {
       return (
         <Link to="description">

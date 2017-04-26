@@ -13,13 +13,13 @@ class ExerciseTile extends Component {
     e.preventDefault();
 
     var { dispatch } = this.props;
-
     var weight = this.refs.weight.value;
     var reps = this.refs.reps.value;
 
-    var attribute = $(e.target.attributes['data-reactid']).val();
-
-    var id = attribute.slice(12, 48);
+    // console.log(e.target.attributes);
+    // var attribute = $(e.target.attributes['value']).val();
+    // console.log(e.target.attributes);
+    // // var id = attribute.slice(12, 48);
 
     dispatch(actions.addExerciseDetails(id, weight, reps));
 
@@ -36,7 +36,7 @@ class ExerciseTile extends Component {
       <div className="exercise-tile small-12 columns small-centered">
         <h1> {this.props.title} </h1>
 
-        {this.props.detail.map((detail, index) => {
+        {this.props.sets_reps.map((detail, index) => {
           return (
             <SetReps
               key={index}

@@ -11,16 +11,11 @@ class SetReps extends Component {
         <div className="setreps small-12 columns">
           <p>
             Set
-            {' '}
             {this.props.set}
-            {' '}
             Weight:
             {this.props.weight}
-            {' '}
             x
-            {' '}
             {this.props.reps}
-            {' '}
             Reps
           </p>
         </div>

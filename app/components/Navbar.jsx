@@ -6,8 +6,6 @@ import { loginUser, logoutUser } from '../actions';
 
 export default class Navbar extends Component {
   render() {
-    console.log('navbar');
-    console.log(this.props);
     const { dispatch, isAuthenticated, errorMessage } = this.props;
     return (
       <nav className="navbar">
@@ -21,12 +19,11 @@ export default class Navbar extends Component {
             {isAuthenticated &&
               <Logout onLogoutClick={() => dispatch(logoutUser())} />}
 
-              {isAuthenticated &&
-              <Dashboard/>}
-            
+            {isAuthenticated && <Dashboard />}
+
           </div>
         </div>
       </nav>
     );
   }
-} 
+}

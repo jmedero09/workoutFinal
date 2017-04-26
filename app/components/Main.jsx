@@ -11,7 +11,6 @@ class Main extends Component {
     super(props);
   }
   render() {
-    console.log(this.props);
     const { dispatch, exercise } = this.props;
     const { isAuthenticated, errorMessage } = this.props.authReducer;
     return (
@@ -29,7 +28,6 @@ class Main extends Component {
         <Route
           path="/workouts"
           render={() => {
-            console.log('fucking saved workout');
             return <Workouts />;
           }}
         />
