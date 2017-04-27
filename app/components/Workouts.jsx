@@ -1,21 +1,18 @@
+import React, { Component } from 'react';
+import { Link, IndexLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import WorkoutTile from './WorkoutTile';
-import { Link, IndexLink } from 'react-router';
-import React, { Component } from 'react';
 
 class Workouts extends Component {
   constructor(props) {
     super(props);
   }
   renderList() {
-    return this.props.saved.createWorkout.map((WorkoutTile, index) => {
+    return this.props.workouts.map((workout, index) => {
       return (
-        <Link to="description">
+        <Link to={'/' + workout.id} key={index}>
           <li key={index}>
-            <WorkoutTile
-              workout={WorkoutTile.workoutLabel}
-              date={WorkoutTile.date}
-            />
+            <WorkoutTile name={workout.name} date={workout.date} />
           </li>
         </Link>
       );
@@ -23,16 +20,18 @@ class Workouts extends Component {
   }
   render(props) {
     return (
-      <ul className="small-centered  small-12 columns text-center">
-        {this.renderList()}
-      </ul>
+      <div>
+        <ul className="small-centered  small-12 columns text-center">
+          <h1>Workouts component renders here</h1>
+          {this.renderList()}
+        </ul>
+        {this.props.children}
+      </div>
     );
   }
 }
-var mapStateToProps = (state, props) => {
-  return {
-    saved: state
-  };
+var mapStateToProps = state => {
+  return state.workoutReducer;
 };
 
 export default connect(mapStateToProps)(Workouts);

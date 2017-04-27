@@ -9,7 +9,7 @@ export default class WorkoutTile extends Component {
       <div className="row">
 
         <div className="savedTitle small-centered columns">
-          <h1>{this.props.workout}</h1>
+          <h1>{this.props.name}</h1>
           <p>{this.props.date}</p>
         </div>
       </div>

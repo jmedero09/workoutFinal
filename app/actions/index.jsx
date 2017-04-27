@@ -41,26 +41,51 @@ export var addExercise = name => {
 //   };
 // }
 
-export function createWorkout(name) {
-  const config = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `name=${name}`
-  };
+export var saveWorkout = (state = [], action) => {
+  switch (action.type) {
+    case 'SAVE_WORKOUT':
+      return update(state, {
+        $push: [
+          {
+            workoutLabel: action.workoutLabel,
+            date: action.date,
+            storedSession: [...state]
+          }
+        ]
+      });
+    default:
+      return state;
+  }
+};
 
-  return dispatch => {
-    return fetch('http://localhost:8080/api/workouts', config)
-      .then(response => response.json())
-      .then(response => {
-        if (!response.ok) {
-          Promise.reject(response);
-        } else {
-          Promise.resolve(response);
-        }
-      })
-      .catch(err => new Error(err));
+export var createWorkout = name => {
+  return {
+    type: 'SAVE_WORKOUT',
+    name,
+    date: moment().format('MMM Do YYYY')
   };
-}
+};
+
+// export function createWorkout(name) {
+//   const config = {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+//     body: `name=${name}`
+//   };
+
+//   return dispatch => {
+//     return fetch('http://localhost:8080/api/workouts', config)
+//       .then(response => response.json())
+//       .then(response => {
+//         if (!response.ok) {
+//           Promise.reject(response);
+//         } else {
+//           Promise.resolve(response);
+//         }
+//       })
+//       .catch(err => new Error(err));
+//   };
+// }
 
 export var addExerciseDetails = (id, weight, reps) => {
   return {

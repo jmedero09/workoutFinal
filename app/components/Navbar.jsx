@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import Logout from './Logout';
@@ -10,6 +11,10 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="container-fluid">
+          <div className="small-centered  small-12 columns text-center">
+            <Link to="/"><img className="logoImg" src="logo.png" /></Link>
+          </div>
+
           <div>
             {!isAuthenticated &&
               <Login
@@ -19,7 +24,10 @@ export default class Navbar extends Component {
             {isAuthenticated &&
               <Logout onLogoutClick={() => dispatch(logoutUser())} />}
 
-            {isAuthenticated && <Dashboard />}
+            <div>
+              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/workouts">Workouts</Link>
+            </div>
 
           </div>
         </div>

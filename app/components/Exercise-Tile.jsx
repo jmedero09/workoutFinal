@@ -16,26 +16,25 @@ class ExerciseTile extends Component {
     var weight = this.refs.weight.value;
     var reps = this.refs.reps.value;
 
-    // console.log(e.target.attributes);
-    // var attribute = $(e.target.attributes['value']).val();
-    // console.log(e.target.attributes);
-    // // var id = attribute.slice(12, 48);
-
+    const id = e.target.attributes.id.value;
     dispatch(actions.addExerciseDetails(id, weight, reps));
 
     this.refs.weight.value = '';
     this.refs.reps.value = '';
+    this.forceUpdate();
   }
   render() {
     const {
-      fields: { exercise, weight, reps },
+      fields: exercise,
+      weight,
+      reps,
       handleSubmit,
       onKeyPress
     } = this.props;
+
     return (
       <div className="exercise-tile small-12 columns small-centered">
         <h1> {this.props.title} </h1>
-
         {this.props.sets_reps.map((detail, index) => {
           return (
             <SetReps
@@ -47,7 +46,7 @@ class ExerciseTile extends Component {
           );
         })}
 
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} id={this.props.exercise_id}>
           <div className="small-4 columns small-centered">
             <label> Weight </label>
             {' '}

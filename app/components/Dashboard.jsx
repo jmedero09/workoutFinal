@@ -4,7 +4,7 @@ import * as actions from '../actions';
 import ExerciseTileList from './Exercise-Tile-List';
 import SetRepList from './SetRepsList';
 import moment from 'moment';
-import { Link, hashHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { fields, reduxForm } from 'redux-form';
 
 class Dashboard extends Component {
@@ -32,7 +32,10 @@ class Dashboard extends Component {
     var name = prompt('Enter what you worked out today');
 
     dispatch(actions.createWorkout(name));
-    hashHistory.push('/workouts');
+
+    withRouter(({ history }) => {
+      history.push('/workouts');
+    });
   }
   render() {
     const {

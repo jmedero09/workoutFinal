@@ -10,8 +10,12 @@ class ExerciseTileList extends Component {
   renderList() {
     return this.props.exercises.map((exercise, index) => {
       return (
-        <li key={exercise.id} value={exercise.id}>
-          <ExerciseTile title={exercise.name} sets_reps={exercise.sets_reps} />
+        <li key={exercise.id}>
+          <ExerciseTile
+            title={exercise.name}
+            sets_reps={exercise.sets_reps}
+            exercise_id={exercise.id}
+          />
         </li>
       );
     });

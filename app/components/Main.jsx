@@ -15,9 +15,6 @@ class Main extends Component {
     const { isAuthenticated, errorMessage } = this.props.authReducer;
     return (
       <div className="row">
-        <div className="small-centered  small-12 columns text-center">
-          <Link to="/"><img className="logoImg" src="logo.png" /></Link>
-        </div>
 
         <Navbar
           isAuthenticated={isAuthenticated}
@@ -25,17 +22,8 @@ class Main extends Component {
           dispatch={dispatch}
         />
 
-        <Route
-          path="/workouts"
-          render={() => {
-            return <Workouts />;
-          }}
-        />
+        {this.props.children}
 
-        <div>
-          <Link to="/">Home</Link>
-          <Link to="/workouts">Workouts</Link>
-        </div>
       </div>
     );
   }

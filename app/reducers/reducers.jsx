@@ -27,33 +27,30 @@ const exerciseReducer = (state = { exercises: [] }, action) => {
       });
 
     case 'ADD_EXERCISE_DETAILS':
-      const exerciseIndex = state.exercises.findIndex(function(exercise) {
+      const index = state.exercises.findIndex(function(exercise) {
         return exercise.id === action.id;
       });
-      return update(state, {
-        [exerciseIndex]: {
-          sets_reps: {
-            $push: [
-              {
-                reps: action.reps,
-                weight: action.weight
-              }
-            ]
-          }
-        }
+
+      var state_update = Object.assign({}, state);
+      state_update.exercises[index].sets_reps.push({
+        reps: action.reps,
+        weight: action.weight
       });
+      return state_update;
+
     default:
       return state;
   }
 };
 
-const workoutReducer = (state = [], action) => {
+const workoutReducer = (state = { workouts: [] }, action) => {
   switch (action.type) {
     case 'SAVE_WORKOUT':
-      return update(state, {
-        $push: [
+      return Object.assign({}, state, {
+        workouts: [
+          ...state.workouts,
           {
-            workoutLabel: action.name,
+            name: action.name,
             date: action.date
           }
         ]
