@@ -9,8 +9,9 @@ class Workouts extends Component {
   }
   renderList() {
     return this.props.workouts.map((workout, index) => {
+      console.log(workout);
       return (
-        <Link to={'/' + workout.id} key={index}>
+        <Link to={'description'} key={index}>
           <li key={index}>
             <WorkoutTile name={workout.name} date={workout.date} />
           </li>

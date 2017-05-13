@@ -22,9 +22,9 @@ ReactDOM.render(
         <Switch>
           <Main>
             <Route path="/workouts" component={Workouts}>
-              <Route path="/:id" component={WorkoutDescription} />
             </Route>
             <Route path="/Dashboard" component={Dashboard} />
+            <Route path="/description" component={WorkoutDescription} />
           </Main>
         </Switch>
       </div>

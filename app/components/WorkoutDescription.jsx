@@ -8,15 +8,16 @@ class WorkoutDescription extends Component {
   constructor(props) {
     super(props);
   }
-  render(props) {
-    let exercises = this.props.description.map((detail, index) => {
-      let details = detail.detail.map(item => (
-        <SetRep set={++index} weight={item.weight} reps={item.reps} />
+  render() {
+    console.log( this.props.description.exercises);
+    let exercises = this.props.description.exercises.map((exercise, index) => {
+      let sets_reps = exercise.sets_reps.map(item => (
+        <SetRep key={index} set={++index} weight={item.weight} reps={item.reps} />
       ));
       return (
-        <div>
-          <h1>{detail.exercise}</h1>
-          {details}
+        <div key={index}>
+          <h1>{exercise.name}</h1>
+          {sets_reps}
         </div>
       );
     });
@@ -28,9 +29,9 @@ class WorkoutDescription extends Component {
     );
   }
 }
-var mapStateToProps = (state, props) => {
+var mapStateToProps = (state) => {
   return {
-    description: state.addExercise
+    description: state.exerciseReducer
   };
 };
 export default connect(mapStateToProps)(WorkoutDescription);

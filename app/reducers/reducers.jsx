@@ -51,7 +51,8 @@ const workoutReducer = (state = { workouts: [] }, action) => {
           ...state.workouts,
           {
             name: action.name,
-            date: action.date
+            date: action.date,
+            storedSessoin:[...state]
           }
         ]
       });

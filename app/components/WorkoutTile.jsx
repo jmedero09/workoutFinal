@@ -11,6 +11,7 @@ export default class WorkoutTile extends Component {
         <div className="savedTitle small-centered columns">
           <h1>{this.props.name}</h1>
           <p>{this.props.date}</p>
+          {this.props.id}
         </div>
       </div>
     );

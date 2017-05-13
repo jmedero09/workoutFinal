@@ -41,28 +41,30 @@ export var addExercise = name => {
 //   };
 // }
 
-export var saveWorkout = (state = [], action) => {
-  switch (action.type) {
-    case 'SAVE_WORKOUT':
-      return update(state, {
-        $push: [
-          {
-            workoutLabel: action.workoutLabel,
-            date: action.date,
-            storedSession: [...state]
-          }
-        ]
-      });
-    default:
-      return state;
-  }
-};
+// export var saveWorkout = (state = [], action) => {
+//   switch (action.type) {
+//     case 'SAVE_WORKOUT':
+//       return update(state, {
+//         $push: [
+//           {
+//             workoutLabel: action.workoutLabel,
+//             date: action.date,
+//             storedSession: [...state]
+//           }
+//         ]
+//       });
+//     default:
+//       return state;
+//   }
+// };
 
 export var createWorkout = name => {
   return {
     type: 'SAVE_WORKOUT',
     name,
+    storedSessoin:[],
     date: moment().format('MMM Do YYYY')
+   
   };
 };
 
