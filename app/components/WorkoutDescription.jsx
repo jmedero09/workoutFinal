@@ -9,10 +9,15 @@ class WorkoutDescription extends Component {
     super(props);
   }
   render() {
-    console.log( this.props.description.exercises);
+    console.log('what an actual fuck', this.props.description);
     let exercises = this.props.description.exercises.map((exercise, index) => {
       let sets_reps = exercise.sets_reps.map(item => (
-        <SetRep key={index} set={++index} weight={item.weight} reps={item.reps} />
+        <SetRep
+          key={index}
+          set={++index}
+          weight={item.weight}
+          reps={item.reps}
+        />
       ));
       return (
         <div key={index}>
@@ -29,7 +34,7 @@ class WorkoutDescription extends Component {
     );
   }
 }
-var mapStateToProps = (state) => {
+var mapStateToProps = state => {
   return {
     description: state.exerciseReducer
   };

@@ -2,44 +2,49 @@ import * as redux from 'redux';
 import uuid from 'node-uuid';
 import moment from 'moment';
 
-export var addExercise = name => {
-  return {
-    type: 'ADD_EXERCISE',
-    id: uuid(),
-    name: name,
-    sets_reps: []
+// export var addExercise = name => {
+//   return {
+//     type: 'ADD_EXERCISE',
+//     id: uuid(),
+//     name: name,
+//     sets_reps: []
+//   };
+// };
+
+export function addExercise(name) {
+  const exercises_config = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `bearer ${localStorage.getItem('id_token')}`
+    },
+    body: `name=${name}`
   };
-};
 
-// export function addExercise(name) {
-//   const config = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-//     body: `name=${name}`
-//   };
+  const workout_config = {
+    method: 'POST',
+    headers: {
+      'Authorization': `bearer ${localStorage.getItem('id_token')}`
+    }
+  };
 
-//   return dispatch => {
-//     // We dispatch requestLogin to kickoff the call to the API
-//     dispatch(requestLogin(creds));
-//     return fetch('http://localhost:8080/auth/login', config)
-//       .then(response => response.json().then(user => ({ user, response })))
-//       .then(({ user, response }) => {
-//         if (!response.ok) {
-//           // If there was a problem, we want to
-//           // dispatch the error condition
-//           dispatch(loginError(user.message));
-//           return Promise.reject(user);
-//         }
 
-//         // If login was successful, set the token in local storage
-//         localStorage.setItem('id_token', user.token);
+  return dispatch => {
+    return fetch('http://localhost:8080/api/workouts', workout_config)
+      .then(response => response.json())
+      .then(response => {
 
-//         // Dispatch the success action
-//         return dispatch(receiveLogin(user));
-//       })
-//       .catch(err => new Error(err));
-//   };
-// }
+        return fetch(`http://localhost:8080/api/workouts/exercises/${response._id}`, exercises_config)
+          .then(response => response.json())
+          .then(response => {
+            console.log('asslick', response);
+          })
+          .catch(err => new Error(err));
+
+      })
+      .catch(err => new Error(err));
+  };
+}
 
 // export var saveWorkout = (state = [], action) => {
 //   switch (action.type) {
@@ -62,9 +67,8 @@ export var createWorkout = name => {
   return {
     type: 'SAVE_WORKOUT',
     name,
-    storedSessoin:[],
+    storedSessoin: [],
     date: moment().format('MMM Do YYYY')
-   
   };
 };
 
@@ -173,7 +177,9 @@ function receiveLogout() {
 export function loginUser(creds) {
   const config = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     body: `username=${creds.username}&password=${creds.password}`
   };
 
@@ -181,8 +187,14 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
     return fetch('http://localhost:8080/auth/login', config)
-      .then(response => response.json().then(user => ({ user, response })))
-      .then(({ user, response }) => {
+      .then(response => response.json().then(user => ({
+        user,
+        response
+      })))
+      .then(({
+        user,
+        response
+      }) => {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition

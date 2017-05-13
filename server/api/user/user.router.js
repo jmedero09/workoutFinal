@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const controller = require('./user.controller');
-const isAuth = require('../utils/isAuth');
 
-router.route('/').get(isAuth, controller.all);
-router.route('/me').get(isAuth, controller.me);
+router.route('/').get(controller.all);
+router.route('/me').get(controller.me);
 
 module.exports = router;

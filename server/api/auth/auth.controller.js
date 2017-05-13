@@ -6,14 +6,15 @@ const jsonwebtoken = require('jsonwebtoken');
 
 const controller = {};
 
-
 controller.login = (req, res, next) => {
   const {
     username,
-    password,
+    password
   } = req.body;
 
-  User.findOne({ username }, (error, user) => {
+  User.findOne({
+    username
+  }, (error, user) => {
     if (error) {
       return next(error);
     }
@@ -22,21 +23,22 @@ controller.login = (req, res, next) => {
       return next(new Error('User not found.'));
     }
 
-    user.validPassword(password, (passwordError) => {
+    user.validPassword(password, passwordError => {
       if (passwordError) {
         next(passwordError);
       } else {
         const payload = {
           id: user.id,
-          username: user.username,
+          username: user.username
         };
 
-        const token = jsonwebtoken.sign({
-          exp: Math.floor(Date.now() / 1000) + (60 * 60),
-          payload,
-        }, '12345');
+        const token = jsonwebtoken.sign(payload, '12345', {
+          expiresIn: 60 * 60
+        });
 
-        res.status(200).json({ token });
+        res.status(200).json({
+          token
+        });
       }
     });
   });
@@ -49,25 +51,25 @@ controller.register = (req, res, next) => {
         next(err);
       } else {
         User.create({
-          username: req.body.username,
-          password: hashedPassword,
-        }, (error, user) => {
-          if (error) {
-            next(error);
-          } else {
-            res.status(201).json(user);
+            username: req.body.username,
+            password: hashedPassword
+          },
+          (error, user) => {
+            if (error) {
+              next(error);
+            } else {
+              res.status(201).json(user);
+            }
           }
-        });
+        );
       }
     });
   });
 };
 
-
 controller.logout = (req, res, next) => {
   req.logout();
   next();
 };
-
 
 module.exports = controller;
